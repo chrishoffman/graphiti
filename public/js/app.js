@@ -108,9 +108,15 @@ var app = Sammy('body', function() {
     },
     saveOptions: function(params) {
       var json = this.getEditorJSON();
-      json.options = params;
+      json.options = this.mergeOptions(json.options, params);
       this.graphPreview(json);
       this.setEditorJSON(json);
+    },
+    mergeOptions: function(opt1, opt2) {
+      var mopt = {};
+      for (var a in opt1) { mopt[a] = opt1[a]; }
+      for (var a in opt2) { mopt[a] = opt2[a]; }
+      return mopt;
     },
     buildMetricsList: function($list, metrics) {
       var $li = $list.find('li:first').clone();
